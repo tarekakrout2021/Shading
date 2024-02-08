@@ -10,23 +10,9 @@ import type * as utils from './lib/utils';
 // helper lib, provides exercise dependent prewritten Code
 import * as helper from './helper';
 
-// load shaders
-// import basicVertexShader from './shader/basic.v.glsl?raw';
-// import basicFragmentShader from './shader/basic.f.glsl?raw';
-
-
-
-
-
-// TODO : light intensity ?? 
-
-
-
-
-
 // create scene
 var scene = new THREE.Scene();
-//var { material } = helper.setupGeometry(scene);
+
 var materialAmbient = helper.setupGeometryAmbient(scene);
 var materialNormal = helper.setupGeometryNormal(scene);
 var materialToon = helper.setupGeometryToon(scene);
@@ -36,7 +22,7 @@ var materialPhong = helper.setupGeometryPhong(scene);
 var materialCook = helper.setupGeometryCook(scene);
 
 
-// add light proxy
+// add light 
 var lightgeo = new THREE.SphereGeometry(0.1, 32, 32);
 var lightMaterial = new THREE.MeshBasicMaterial({color: 0xff8010});
 var light = new THREE.Mesh(lightgeo, lightMaterial);
@@ -45,8 +31,6 @@ light.position.y = 2.;
 light.position.z = 2.; 
 scene.add(light);
 
-
-// ---------------------------------------------------------------------------
 // create Settingsand create GUI settings
 var settings = new helper.Settings();
 helper.createGUI(settings);
@@ -54,8 +38,6 @@ helper.createGUI(settings);
 settings.addCallback(callback);
 
 
-// defines callback that should get called whenever the
-// params of the settings get changed (eg. via GUI)
 function callback(changed: utils.KeyValuePair<helper.Settings>) {
   //light 
   if(changed.key == 'lightX'){
@@ -176,8 +158,6 @@ function callback(changed: utils.KeyValuePair<helper.Settings>) {
 
 }
 
-// feel free to declar certain variables outside the main function to change them somewhere else
-// e.g. settings, light or material
 function main(){
   // setup/layout root Application.
   // Its the body HTMLElement with some additional functions.
@@ -187,10 +167,7 @@ function main(){
   root.setLayoutColumns(["100%"]);
   root.setLayoutRows(["100%"]);
 
- 
-
-  // ---------------------------------------------------------------------------
-  // create RenderDiv
+   // create RenderDiv
 	var rendererDiv = createWindow("renderer");
   root.appendChild(rendererDiv);
 
@@ -258,13 +235,6 @@ function main(){
   materialCook.uniforms.specular_color = {value : new THREE.Vector3(1.,1.,1.) }
   materialCook.uniforms.roughness = {value : 0.2 }
 
-
-
-
-
-  // fill the renderDiv. In RenderWidget happens all the magic.
-  // It handles resizes, adds the fps widget and most important defines the main animate loop.
-  // You dont need to touch this, but if feel free to overwrite RenderWidget.animate
   var wid = new RenderWidget(rendererDiv, renderer, camera, scene, controls);
   // start the draw loop (this call is async)
   wid.animate();
