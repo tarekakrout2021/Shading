@@ -4,8 +4,8 @@
 
 ## Requirements
 
-* node.js
-* npm
+* node.js ( this was developed with node v16.20.2 )
+* npm (this was developed with version 8.19.4)
 * browser that supports WebGL
 
 
